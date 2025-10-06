@@ -71,8 +71,6 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           path: target/site/jacoco/jacoco.xml
-          # since we have multiple components we must use distinct artifact names
-          # see also `coverage-files` attribute inside `cs-coverage-check` job below
           name: calculator2.jacoco.xml
 
   coverage-calculator3:
@@ -89,8 +87,6 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           path: target/site/jacoco/jacoco.xml
-          # since we have multiple components we must use distinct artifact names
-          # see also `coverage-files` attribute inside `cs-coverage-check` job below
           name: calculator3.jacoco.xml
 
 
