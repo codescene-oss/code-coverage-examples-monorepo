@@ -50,8 +50,6 @@ jobs:
         working-directory: ./calculator1
     steps:
       - uses: actions/checkout@v4
-        with:
-          ref: ${{ github.head_ref }}
       - name: Run tests with coverage
         run: mvn clean install
       - uses: actions/upload-artifact@v4
@@ -70,8 +68,6 @@ jobs:
         working-directory: ./calculator2
     steps:
       - uses: actions/checkout@v4
-        with:
-          ref: ${{ github.head_ref }}
       - name: Run tests with coverage
         run: mvn clean install
       - uses: actions/upload-artifact@v4
@@ -90,8 +86,6 @@ jobs:
         working-directory: ./calculator3
     steps:
       - uses: actions/checkout@v4
-        with:
-          ref: ${{ github.head_ref }}
       - name: Run tests with coverage
         run: mvn clean install
       - uses: actions/upload-artifact@v4
