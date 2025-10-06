@@ -49,10 +49,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Run tests with coverage
-        run: mvn clean install
+        run: mvn clean test
       - uses: actions/upload-artifact@v4
         with:
-          path: target/site/jacoco/jacoco.xml
+          path: calculator-1/target/site/jacoco/jacoco.xml
           # since we have multiple components we must use distinct artifact names
           # see also `coverage-files` attribute inside `cs-coverage-check` job below
           name: calculator1.jacoco.xml
@@ -67,10 +67,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Run tests with coverage
-        run: mvn clean install
+        run: mvn clean test
       - uses: actions/upload-artifact@v4
         with:
-          path: target/site/jacoco/jacoco.xml
+          path: calculator-2/target/site/jacoco/jacoco.xml
           name: calculator2.jacoco.xml
 
   coverage-calculator3:
@@ -83,10 +83,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Run tests with coverage
-        run: mvn clean install
+        run: mvn clean test
       - uses: actions/upload-artifact@v4
         with:
-          path: target/site/jacoco/jacoco.xml
+          path: calculator-3/target/site/jacoco/jacoco.xml
           name: calculator3.jacoco.xml
 
 
@@ -115,6 +115,4 @@ jobs:
           # NOTE:: if only one component is analyzed then there's only a single coverage/jacoco.xml file
           # If multiple components, then the files are nested: coverage/calculator1.jacoco.xml/jacoco.xml, coverage/calculator1.jacoco.xml/jacoco.xml, etc.
           coverage-files: "**/coverage/**/jacoco.xml"
-
-
 
