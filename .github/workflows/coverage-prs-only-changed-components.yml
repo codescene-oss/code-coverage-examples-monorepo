@@ -1,17 +1,11 @@
 name: Coverage PRs - only changed components
 
 on:
-  push: # workflow for pushes to the main branch
+  pull_request:
     branches:
       - master
     paths:
       - 'src/**'
-  pull_request: # workflow when opening PRs
-    branches:
-      - master
-    paths:
-      - 'src/**'
-  workflow_dispatch:
 
 # permissions needed for assuming the IAM role below
 permissions:
