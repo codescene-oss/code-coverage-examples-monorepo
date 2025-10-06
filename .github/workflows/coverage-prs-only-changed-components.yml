@@ -59,7 +59,7 @@ jobs:
 
   coverage-calculator2:
     needs: changes
-    if: ${{ needs.changes.outputs.calculator1 == 'true' }}
+    if: ${{ needs.changes.outputs.calculator2 == 'true' }}
     runs-on: ubuntu-24.04
     defaults:
       run:
@@ -75,7 +75,7 @@ jobs:
 
   coverage-calculator3:
     needs: changes
-    if: ${{ needs.changes.outputs.calculator1 == 'true' }}
+    if: ${{ needs.changes.outputs.calculator3 == 'true' }}
     runs-on: ubuntu-24.04
     defaults:
       run:
