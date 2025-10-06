@@ -15,6 +15,9 @@ public class Calculator {
             case ':':{
                 return divide(firstOperand,secondOperand);
             }
+            case '^':{
+                return square(firstOperand);
+            }
             default:
                 throw new IllegalArgumentException("Unsupported operation :"+operator);
         }
@@ -38,7 +41,7 @@ public class Calculator {
         return firstOperand + secondOperand;
     }
 
-    private double squareNotCovered(double x) {
+    private double square(double x) {
         return x * x;
     }
 }
