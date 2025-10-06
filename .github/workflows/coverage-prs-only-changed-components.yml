@@ -5,7 +5,9 @@ on:
     branches:
       - master
     paths:
-      - 'src/**'
+      - 'calculator1/src/**'
+      - 'calculator2/src/**'
+      - 'calculator3/src/**'
 
 # permissions needed for assuming the IAM role below
 permissions:
