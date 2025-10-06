@@ -45,7 +45,7 @@ jobs:
     runs-on: ubuntu-24.04
     defaults:
       run:
-        working-directory: ./calculator1
+        working-directory: ./calculator-1
     steps:
       - uses: actions/checkout@v4
       - name: Run tests with coverage
@@ -63,7 +63,7 @@ jobs:
     runs-on: ubuntu-24.04
     defaults:
       run:
-        working-directory: ./calculator2
+        working-directory: ./calculator-2
     steps:
       - uses: actions/checkout@v4
       - name: Run tests with coverage
@@ -79,7 +79,7 @@ jobs:
     runs-on: ubuntu-24.04
     defaults:
       run:
-        working-directory: ./calculator3
+        working-directory: ./calculator-3
     steps:
       - uses: actions/checkout@v4
       - name: Run tests with coverage
