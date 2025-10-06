@@ -7,8 +7,6 @@ inputs:
     required: true
   coverage-files:
     required: true
-  environment:
-    required: false # assumes prod, if not specified
 runs:
   using: "composite"
   steps:
