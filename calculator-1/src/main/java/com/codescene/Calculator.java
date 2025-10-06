@@ -37,4 +37,8 @@ public class Calculator {
     private double add(double firstOperand, double secondOperand) {
         return firstOperand + secondOperand;
     }
+
+    private double squareNotCovered(double x) {
+        return x * x;
+    }
 }
