@@ -4,11 +4,10 @@ on:
   pull_request:
     branches:
       - master
-      # TODO: just a test
-    # paths:
-    #   - 'calculator1/src/**'
-    #   - 'calculator2/src/**'
-    #   - 'calculator3/src/**'
+    paths:
+      - 'calculator-1/src/**'
+      - 'calculator-2/src/**'
+      - 'calculator-3/src/**'
 
 
 jobs:
@@ -34,11 +33,11 @@ jobs:
         with:
           filters: |
             calculator1:
-              - 'calculator1/**'
+              - 'calculator-1/**'
             calculator2:
-              - 'calculator2/**'
+              - 'calculator-2/**'
             calculator3:
-              - 'calculator3/**'
+              - 'calculator-3/**'
 
   coverage-calculator1:
     needs: changes
