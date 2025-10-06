@@ -125,7 +125,7 @@ jobs:
           project-url: "https://api.codescene.io/v2/projects/71803"
           # Include coverage files from all the artifacts (jobs)
           # NOTE:: if only one component is analyzed then there's only a single coverage/jacoco.xml file
-          # not nested as if multiple components: coverage/features.lcov.info/lcov.info, coverage/cloud.worker.lcov.info/lcov.info, etc.
+          # If multiple components, then the files are nested: coverage/calculator1.jacoco.xml/jacoco.xml, coverage/calculator1.jacoco.xml/jacoco.xml, etc.
           coverage-files: "**/coverage/**/jacoco.xml"
 
 
