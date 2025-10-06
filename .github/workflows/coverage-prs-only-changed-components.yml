@@ -1,0 +1,138 @@
+name: Coverage PRs - only changed components
+
+on:
+  push: # workflow for pushes to the main branch
+    branches:
+      - master
+    paths:
+      - 'src/**'
+  pull_request: # workflow when opening PRs
+    branches:
+      - master
+    paths:
+      - 'src/**'
+  workflow_dispatch:
+
+# permissions needed for assuming the IAM role below
+permissions:
+  contents: read # This is required for actions/checkout
+  id-token: write # This is required for requesting the JWT
+
+jobs:
+
+  # A special job solely to detect which components have changed
+  # Based on the detected changes, we then only run specific coverage jobs below
+  # cs-coverage-check is executed once and only once - always after the *-coverage jobs completed
+  changes:
+    runs-on: ubuntu-24.04
+    # Set job outputs to values from filter step
+    outputs:
+      calculator1: ${{ steps.filter.outputs.calculator1 }}
+      calculator2: ${{ steps.filter.outputs.calculator2 }}
+      calculator3: ${{ steps.filter.outputs.calculator3 }}
+    # Required permissions for detecting changes inside PRs via GitHub API
+    permissions:
+      pull-requests: read
+    steps:
+      # For pull requests it's not necessary to checkout the code
+      #- uses: actions/checkout@v4
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            calculator1:
+              - 'calculator1/**'
+            calculator2:
+              - 'calculator2/**'
+            calculator3:
+              - 'calculator3/**'
+
+  coverage-calculator1:
+    needs: changes
+    if: ${{ needs.changes.outputs.calculator1 == 'true' }}
+    runs-on: ubuntu-24.04
+    defaults:
+      run:
+        working-directory: ./calculator1
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+      - name: Run tests with coverage
+        run: mvn clean install
+      - uses: actions/upload-artifact@v4
+        with:
+          path: target/site/jacoco/jacoco.xml
+          # since we have multiple components we must use distinct artifact names
+          # see also `coverage-files` attribute inside `cs-coverage-check` job below
+          name: calculator1.jacoco.xml
+
+  coverage-calculator2:
+    needs: changes
+    if: ${{ needs.changes.outputs.calculator1 == 'true' }}
+    runs-on: ubuntu-24.04
+    defaults:
+      run:
+        working-directory: ./calculator2
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+      - name: Run tests with coverage
+        run: mvn clean install
+      - uses: actions/upload-artifact@v4
+        with:
+          path: target/site/jacoco/jacoco.xml
+          # since we have multiple components we must use distinct artifact names
+          # see also `coverage-files` attribute inside `cs-coverage-check` job below
+          name: calculator2.jacoco.xml
+
+  coverage-calculator3:
+    needs: changes
+    if: ${{ needs.changes.outputs.calculator1 == 'true' }}
+    runs-on: ubuntu-24.04
+    defaults:
+      run:
+        working-directory: ./calculator3
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+      - name: Run tests with coverage
+        run: mvn clean install
+      - uses: actions/upload-artifact@v4
+        with:
+          path: target/site/jacoco/jacoco.xml
+          # since we have multiple components we must use distinct artifact names
+          # see also `coverage-files` attribute inside `cs-coverage-check` job below
+          name: calculator3.jacoco.xml
+
+
+  cs-coverage-check:
+    runs-on: ubuntu-24.04
+    needs: [ coverage-calculator1, coverage-calculator2, coverage-calculator3 ]
+    # NOTE: 'always()' is needed here because we want to run this step even if some of its dependencies fail
+    if: always()
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # fetch everything so that `cs-coverage check` can find merge-base.
+          fetch-depth: 0
+        # Download all artifacts/coverage files: https://github.com/actions/download-artifact#download-all-artifacts
+        # this also affects `coverage-files` property in the subsequent step
+      - name: download coverage
+        uses: actions/download-artifact@v5
+        with:
+          path: coverage/
+      - uses: ./.github/actions/check-coverage
+        if: always()
+        with:
+          access-token: ${{ secrets.PROD_CS_API_TOKEN }}
+          project-url: "https://api.codescene.io/v2/projects/71803"
+          # Include coverage files from all the artifacts (jobs)
+          # NOTE:: if only one component is analyzed then there's only a single coverage/jacoco.xml file
+          # not nested as if multiple components: coverage/features.lcov.info/lcov.info, coverage/cloud.worker.lcov.info/lcov.info, etc.
+          coverage-files: "**/coverage/**/jacoco.xml"
+
+
+
