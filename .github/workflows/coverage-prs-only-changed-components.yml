@@ -4,10 +4,11 @@ on:
   pull_request:
     branches:
       - master
-    paths:
-      - 'calculator1/src/**'
-      - 'calculator2/src/**'
-      - 'calculator3/src/**'
+      # TODO: just a test
+    # paths:
+    #   - 'calculator1/src/**'
+    #   - 'calculator2/src/**'
+    #   - 'calculator3/src/**'
 
 
 jobs:
