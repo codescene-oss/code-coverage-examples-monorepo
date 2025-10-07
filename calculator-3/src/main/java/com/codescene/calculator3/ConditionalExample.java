@@ -1,4 +1,4 @@
-package com.codescene;
+package com.codescene.calculator3;
 
 public class ConditionalExample {
 

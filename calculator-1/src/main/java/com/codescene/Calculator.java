@@ -1,4 +1,4 @@
-package com.codescene;
+package com.codescene.calculator1;
 
 public class Calculator {
     public double calculate(double firstOperand, double secondOperand, char operator){
