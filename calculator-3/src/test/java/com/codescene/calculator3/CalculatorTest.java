@@ -1,4 +1,4 @@
-package com.codescene;
+package com.codescene.calculator3;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
