@@ -1,0 +1,88 @@
+# This is a simplified version of "only changed components" workflow
+# that, instead, calculates coverage for ALL components whenever it's executed.
+# This is less efficient (and more costly) but also less error-prone and simpler.
+# Notably the 'overall coverage' gate is easier to calculate/evaluate.
+name: Coverage PRs - only changed components
+
+on:
+  # NOTE: don't activate this by default because it could conflict with the other job ('only changed components')
+  # pull_request:
+  #   branches:
+  #     - master
+  #   paths:
+  #     - 'calculator-1/src/**'
+  #     - 'calculator-2/src/**'
+  #     - 'calculator-3/src/**'
+
+
+jobs:
+
+  coverage-calculator1:
+    runs-on: ubuntu-24.04
+    defaults:
+      run:
+        working-directory: ./calculator-1
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run tests with coverage
+        run: mvn clean test
+      - uses: actions/upload-artifact@v4
+        with:
+          path: calculator-1/target/site/jacoco/jacoco.xml
+          # since we have multiple components we must use distinct artifact names
+          # see also `coverage-files` attribute inside `cs-coverage-check` job below
+          name: calculator1.jacoco.xml
+
+  coverage-calculator2:
+    runs-on: ubuntu-24.04
+    defaults:
+      run:
+        working-directory: ./calculator-2
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run tests with coverage
+        run: mvn clean test
+      - uses: actions/upload-artifact@v4
+        with:
+          path: calculator-2/target/site/jacoco/jacoco.xml
+          name: calculator2.jacoco.xml
+
+  coverage-calculator3:
+    runs-on: ubuntu-24.04
+    defaults:
+      run:
+        working-directory: ./calculator-3
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run tests with coverage
+        run: mvn clean test
+      - uses: actions/upload-artifact@v4
+        with:
+          path: calculator-3/target/site/jacoco/jacoco.xml
+          name: calculator3.jacoco.xml
+
+
+  cs-coverage-check:
+    runs-on: ubuntu-24.04
+    needs: [ coverage-calculator1, coverage-calculator2, coverage-calculator3 ]
+    # NOTE: 'always()' is needed here because we want to run this step even if some of its dependencies fail
+    if: always()
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # fetch everything so that `cs-coverage check` can find merge-base.
+          fetch-depth: 0
+        # Download all artifacts/coverage files: https://github.com/actions/download-artifact#download-all-artifacts
+        # this also affects `coverage-files` property in the subsequent step
+      - name: download coverage
+        uses: actions/download-artifact@v5
+        with:
+          path: coverage/
+      - uses: ./.github/actions/check-coverage
+        if: always()
+        with:
+          access-token: ${{ secrets.PROD_CS_API_TOKEN }}
+          project-url: "https://api.codescene.io/v2/projects/71803"
+          # Include coverage files from all the artifacts (jobs)
+          coverage-files: "**/coverage/**/jacoco.xml"
+
