@@ -2,14 +2,14 @@
 name: Coverage Build - ALL components
 
 on:
-  #on:
-  # push:
-  #   branches:
-  #     - master
-  #   paths:
-  #     - 'calculator-1/src/**'
-  #     - 'calculator-2/src/**'
-  #     - 'calculator-3/src/**'
+  on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'calculator-1/src/**'
+      - 'calculator-2/src/**'
+      - 'calculator-3/src/**'
   workflow_dispatch:
 
 jobs:
