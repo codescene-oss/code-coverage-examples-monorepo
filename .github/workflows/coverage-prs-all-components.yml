@@ -2,7 +2,7 @@
 # that, instead, calculates coverage for ALL components whenever it's executed.
 # This is less efficient (and more costly) but also less error-prone and simpler.
 # Notably the 'overall coverage' gate is easier to calculate/evaluate.
-name: Coverage PRs - only changed components
+name: Coverage PRs - ALL components
 
 on:
   # NOTE: don't activate this by default because it could conflict with the other job ('only changed components')
