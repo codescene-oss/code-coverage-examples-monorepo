@@ -2,14 +2,13 @@
 name: Coverage Build - ALL components
 
 on:
-  #on:
-  # push:
-  #   branches:
-  #     - master
-  #   paths:
-  #     - 'calculator-1/src/**'
-  #     - 'calculator-2/src/**'
-  #     - 'calculator-3/src/**'
+  push:
+    branches:
+      - master
+    paths:
+      - 'calculator-1/src/**'
+      - 'calculator-2/src/**'
+      - 'calculator-3/src/**'
   workflow_dispatch:
 
 jobs:
@@ -65,6 +64,8 @@ jobs:
     # NOTE: 'always()' is needed here because we want to run this step even if some of its dependencies fail
     if: always()
     steps:
+      - name: print env
+        run: env
       - uses: actions/checkout@v4
         with:
           # fetch everything so that `cs-coverage check` can find merge-base.
