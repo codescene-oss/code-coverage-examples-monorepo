@@ -110,7 +110,7 @@ jobs:
         if: always()
         with:
           access-token: ${{ secrets.CODESCENE_CODE_COVERAGE_API_TOKEN }}
-          project-url: "https://api.codescene.io/v2/projects/${{ secrets.CODESCENE_CODE_COVERAGE_PROJECT_ID }}"
+          project-url: "https://api.codescene.io/v2/projects/72308"
           # Include coverage files from all the artifacts (jobs)
           # NOTE:: if only one component is analyzed then there's only a single coverage/jacoco.xml file
           # If multiple components, then the files are nested: coverage/calculator1.jacoco.xml/jacoco.xml, coverage/calculator1.jacoco.xml/jacoco.xml, etc.
