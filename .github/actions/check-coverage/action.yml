@@ -19,9 +19,8 @@ runs:
     - name: CodeScene Code Coverage Check
       run: |
         ls -alR $(pwd)/coverage/
-        $(pwd)/cs-coverage check \
-          --verbose \
-          --coverage-files "${{ inputs.coverage-files }}"
+        # you can add --verbose flag for the check command below if you want to see more details in the logs
+        $(pwd)/cs-coverage check --coverage-files "${{ inputs.coverage-files }}"
       env:
         CS_PROJECT_URL: ${{ inputs.project-url }}
         CS_ACCESS_TOKEN: ${{ inputs.access-token }}
