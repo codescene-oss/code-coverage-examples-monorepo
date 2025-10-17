@@ -6,13 +6,13 @@ name: Coverage PRs - ALL components
 
 on:
   # NOTE: don't activate this by default because it could conflict with the other job ('only changed components')
-  # pull_request:
-  #   branches:
-  #     - master
-  #   paths:
-  #     - 'calculator-1/src/**'
-  #     - 'calculator-2/src/**'
-  #     - 'calculator-3/src/**'
+  pull_request:
+    branches:
+      - master
+    paths:
+      - 'calculator-1/src/**'
+      - 'calculator-2/src/**'
+      - 'calculator-3/src/**'
 
 
 jobs:
