@@ -30,4 +30,12 @@ public class CalculatorTest {
         double result = calculator.calculate(1,1,':');
         Assertions.assertEquals(1,result);
     }
+
+    @Test
+    void squareSimple(){
+        // the signature isn't flexible so we repeat the same number twice
+        double result = calculator.calculate(10, 10, '^');
+        Assertions.assertEquals(100.0,result);
+    }
+
 }
