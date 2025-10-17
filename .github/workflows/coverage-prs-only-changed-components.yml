@@ -1,13 +1,14 @@
 name: Coverage PRs - only changed components
 
 on:
-  pull_request:
-    branches:
-      - master
-    paths:
-      - 'calculator-1/src/**'
-      - 'calculator-2/src/**'
-      - 'calculator-3/src/**'
+  # NOTE: disabled only in this branch/PR to be able to exercise the "ALL components" workflow.
+  # pull_request:
+  #   branches:
+  #     - master
+  #   paths:
+  #     - 'calculator-1/src/**'
+  #     - 'calculator-2/src/**'
+  #     - 'calculator-3/src/**'
 
 
 jobs:
