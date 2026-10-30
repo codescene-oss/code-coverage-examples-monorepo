@@ -16,3 +16,7 @@ In our case, the modules are indentical, they just have different names:
 - calculator3
 
 In [.github/workflows](./.github/workflows), you will find corresponding build pipelines definitions.
+
+The reusable `check-coverage` action takes a numeric `project-id`, passes it to
+`cs-coverage check --project-id`, and accepts an optional `onprem-url` for
+CodeScene On-prem. For Cloud projects, the action uses the CLI's default API URL.
