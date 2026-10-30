@@ -3,8 +3,12 @@ description: 'Used to check coverage data during build'
 inputs:
   access-token:
     required: true
-  project-url:
+  project-id:
+    description: 'CodeScene project ID'
     required: true
+  onprem-url:
+    description: 'Base URL for CodeScene On-prem'
+    required: false
   coverage-files:
     required: true
 runs:
@@ -19,8 +23,9 @@ runs:
     - name: CodeScene Code Coverage Check
       run: |
         ls -alR $(pwd)/coverage/
-        $(pwd)/cs-coverage check --verbose --coverage-files "${{ inputs.coverage-files }}"
+        $(pwd)/cs-coverage check --project-id "$PROJECT_ID" --verbose --coverage-files "${{ inputs.coverage-files }}"
       env:
-        CS_PROJECT_URL: ${{ inputs.project-url }}
+        PROJECT_ID: ${{ inputs.project-id }}
+        CS_ONPREM_URL: ${{ inputs.onprem-url }}
         CS_ACCESS_TOKEN: ${{ inputs.access-token }}
       shell: bash
